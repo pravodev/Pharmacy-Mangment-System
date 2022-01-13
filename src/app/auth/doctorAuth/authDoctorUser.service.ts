@@ -35,7 +35,7 @@ export class AuthDoctorUserService {
 
   createDoctorUser(name: string , contact: string , docId: string ,email: string ,password: string ){
     const authDoctorData :AuthDoctorData = {name:name , contact:contact , docId:docId , email:email , password:password};
-    this.http.post("http://localhost:3000/api/doctorUser/doctorSignup",authDoctorData)
+    this.http.post("https://apipms.demo-kota.com/api/doctorUser/doctorSignup",authDoctorData)
       .subscribe(response =>{
         console.log(response);
       });
@@ -45,7 +45,7 @@ export class AuthDoctorUserService {
 
   login(email: string, password){
     const authDoctorData :AuthDoctorData = {name: name , contact: null , docId: null , email: email , password: password};
-    this.http.post<{token: string, expiresIn: number, name:string, contact: string, email:string,docId:string}>("http://localhost:3000/api/doctorUser/doctorLogin",authDoctorData)
+    this.http.post<{token: string, expiresIn: number, name:string, contact: string, email:string,docId:string}>("https://apipms.demo-kota.com/api/doctorUser/doctorLogin",authDoctorData)
       .subscribe(response =>{
         const token= response.token;
         this.token=token;
@@ -72,7 +72,7 @@ export class AuthDoctorUserService {
 
       });
       return this.http.get<{name: string , contact: string , docId: string, email: string}>
-    ('http://localhost:3000/api/doctorUser/shoppingcart/'+email);
+    ('https://apipms.demo-kota.com/api/doctorUser/shoppingcart/'+email);
 
   }
 
@@ -137,7 +137,7 @@ export class AuthDoctorUserService {
     return(this.doctors);
   }
   // getDoctors(id: string) {
-  //   return this.http.get<{userId:string,role:string}>("http://localhost:3000/api/user/profile/"+id);
+  //   return this.http.get<{userId:string,role:string}>("https://apipms.demo-kota.com/api/user/profile/"+id);
   //  }
 
   getCurrentDoctor(){
@@ -146,11 +146,11 @@ export class AuthDoctorUserService {
 
   getDoctorDatas(id: string){
     return this.http.get<{_id: string , name: string, email: string, docId: string ,contact: string, password: string}>
-    ('http://localhost:3000/api/doctorUser/' +id);
+    ('https://apipms.demo-kota.com/api/doctorUser/' +id);
   }
 
   getDoctorData() {
-    this.http.get<{message: string, doctors: any}>('http://localhost:3000/api/doctorUser/getDoctorUserData')
+    this.http.get<{message: string, doctors: any}>('https://apipms.demo-kota.com/api/doctorUser/getDoctorUserData')
     .pipe(map(docData => {
      return docData.doctors.map(doc=>{
        return{
@@ -179,7 +179,7 @@ export class AuthDoctorUserService {
   updateDoctor(id: string ,  name: string, email: string, docId: string, contact: string, password: string){
     const doctor  ={id:id , name:name , email:email , docId : docId , contact:contact , password:password};
     this.http
-             .put('http://localhost:3000/api/doctorUser/' +id , doctor)
+             .put('https://apipms.demo-kota.com/api/doctorUser/' +id , doctor)
              .subscribe(response => {
                const updatedDoctors = [...this.docUser];
                const oldDoctorIndex = updatedDoctors.findIndex(s => s.id ===doctor.id);
@@ -190,7 +190,7 @@ export class AuthDoctorUserService {
   }
 
   deleteUser(userId: string) {
-    this.http.delete('http://localhost:3000/api/doctorUser/' +userId)
+    this.http.delete('https://apipms.demo-kota.com/api/doctorUser/' +userId)
       .subscribe(() => {
         const updatedSupplier = this.docUser.filter(supplier => supplier.id !== userId);
         this.docUser = updatedSupplier;
@@ -199,7 +199,7 @@ export class AuthDoctorUserService {
   }
 
 //   getAll() {
-//     return this.http.get<AuthDoctorData[]>('http://localhost:3000/api/doctorUser');
+//     return this.http.get<AuthDoctorData[]>('https://apipms.demo-kota.com/api/doctorUser');
 // }
 // name: {type: String , require:true},
 //   contact: {type: String , require:true},
